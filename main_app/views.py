@@ -1,20 +1,22 @@
 from django.shortcuts import render
+from .models import Cat
 
-#Temporary db - REMOVE THIS AFTER ADDING CAT MODEL
-cats = [
-    {'name': 'Garfield', 'breed': 'fluffy', 'description': 'orange', 'age': '43'},
-    {'name': 'Grumpy', 'breed': 'mix', 'description': 'grumpy', 'age': '7'},
-]
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
-# add a new view function 'about', to render about.html
 def about(request):
     return render(request, 'about.html')
 
 def cats_index(request):
+    cats = Cat.objects.all()
     return render (request, 'cats/index.html', {
         'cats': cats,
+    })
+def cats_detail(request, cat_id):
+    #to communicate with the db here
+    cat = Cat.objects.get(id=cat_id)
+    return render(request, 'cats/detail.html', {
+        'cat': cat
     })
